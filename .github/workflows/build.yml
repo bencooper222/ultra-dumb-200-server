@@ -34,5 +34,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ultra-dumb-200-server-${{ matrix.os }}-${{ matrix.arch }}
-          tag: ${{ github.ref }}
+          tag: ${{ github.sha }}
           overwrite: true
