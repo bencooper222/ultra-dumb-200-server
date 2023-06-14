@@ -1,4 +1,8 @@
-name: Go package
+name: Build and upload binaries
+
+permissions:
+  contents: write
+
 
 on:
   push:
