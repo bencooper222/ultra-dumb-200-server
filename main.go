@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -13,6 +14,15 @@ func main() {
 	portStr := os.Getenv("PORT")
 	if portStr == "" {
 		log.Fatal("PORT env var must be set")
+	}
+
+	urlPathStr := os.Getenv("URL_PATH")
+	if urlPathStr == "" {
+		urlPathStr = "/"
+		log.Println("URL_PATH env var not set, using default '/'")
+	}
+	if !strings.HasPrefix(urlPathStr, "/") {
+		log.Fatal("URL_PATH env var must start with '/'")
 	}
 	// we just convert to an int to check it is a number
 	// we use portStr below since that's what the http package wnats
@@ -22,7 +32,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/" {
+		if r.URL.Path == urlPathStr {
 			w.WriteHeader(http.StatusOK)
 		} else {
 			w.WriteHeader(http.StatusNotFound)
